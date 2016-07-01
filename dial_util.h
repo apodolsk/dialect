@@ -52,10 +52,12 @@ static inline void call_nullary(void (**f)(void)){
 }
 
 /* NB: Clang had a buggy statement-expression implementation. */
-#define PUN(t, s) ({                                                \
-        CASSERT(sizeof(s) == sizeof(t));                            \
-        ((union {__typeof__(s) str; t i;}) (s)).i;                  \
-        })
+/* #define PUN(t, s) ({                                                \ */
+/*         CASSERT(sizeof(s) == sizeof(t));                            \ */
+/*         ((union {__typeof__(s) str; t i;}) (s)).i;                  \ */
+/*         }) */
+#define PUN(t, s) (*(t *)(typeof(s) []){s})
+
 
 /* Execute (first, as) with comma operator sequencing, except evaluate to
    first rather than the last argument. */
