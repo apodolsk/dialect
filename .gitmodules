@@ -1,0 +1,3 @@
+[submodule "pustr"]
+	path = pustr
+	url = cmu:~/repo/pustr

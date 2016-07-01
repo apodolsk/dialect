@@ -1,6 +1,7 @@
 #pragma once
 
 #include <pustr.h>
+#include <putrace.h>
 #include <logverb.h>
 
 #define lprintf(fmt, as...) puprintf("% "fmt"\n", get_dbg_id(), ##as)

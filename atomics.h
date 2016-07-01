@@ -123,9 +123,6 @@ bool _upd2_won(dptr n, volatile dptr *p, dptr *old);
           (uptr *) (op))
 
 
-#define pudef (howok, "%", *a == WON ? "WON" : *a == OK ? "OK" : "NOT")
-#include <pudef.h>
-
 #ifndef LOG_ATOMICS
 #define LOG_ATOMICS 0
 #endif 
