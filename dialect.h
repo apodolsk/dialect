@@ -18,6 +18,13 @@
 #define transparent __attribute__((transparent_union))
 #define visible_fun __attribute__((visibility("default")))
 
+#define likely(e) __builtin_expect(e, 1)
+#define unlikely(e) __builtin_expect(e, 0)
+#define lif(e) if(likely(e))
+#define uif(e) if(unlikely(e))
+
+#define prefetch(p, as...) __builtin_prefetch((void *)(p), ##as)
+
 #include <whtypes.h>
 #include <runtime_config.h>    
 #include <limits.h>
