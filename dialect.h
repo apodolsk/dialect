@@ -17,6 +17,7 @@
 #define used __attribute__((used))
 #define transparent __attribute__((transparent_union))
 #define visible_fun __attribute__((visibility("default")))
+#define atomic _Atomic
 
 #define likely(e) __builtin_expect(!!(e), 1)
 #define unlikely(e) __builtin_expect(!!(e), 0)

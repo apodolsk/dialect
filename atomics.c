@@ -1,12 +1,12 @@
 #define MODULE ATOMICS
 #undef E_ATOMICS
-#define E_ATOMICS 0, LVL_TODO, LVL_TODO
+#define E_ATOMICS 1, LVL_TODO, LVL_TODO
 
 #include <race.h>
 #include <asm.h>
 
 #define RACE_NS 900
-#define RACE_PCNT (E_DBG_LVL ? 20 : 0)
+#define RACE_PCNT (E_DBG_LVL ? 50 : 0)
 #define RACE_MOD 1
 
 /* u32 __sync_fetch_and_add_4(volatile u32 *p, u32 a){ */
