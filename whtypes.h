@@ -13,15 +13,15 @@ typedef cnt idx;
 typedef intptr_t iptr;
 typedef size_t size;
 typedef ptrdiff_t ptrdiff;
-typedef enum{
+enum{
     EOK = 0,
     EARG = -1,
     EOOR = -2,
-    EINTR = -3,
     
     EMAX = EOK,
-    EMIN = EINTR,
-} err;
+    EMIN = EOOR,
+};
+typedef int err;
 typedef int ecnt;
 
 typedef unsigned char u8;

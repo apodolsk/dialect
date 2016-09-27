@@ -5,6 +5,7 @@
 #define alignof(e) _Alignof(e)
 
 #define CASSERT(e) _Static_assert(e, #e)
+
 /* Safe in expressions, wherein _Static_assert is incorrect because it's a declaration. */
 #define CASSERT_EXP(e) ((void)sizeof(char[1 - 2*!(e)]))
 
@@ -27,7 +28,11 @@ static inline void *subtract_if_not_null(uptr p, cnt s){
 #define cof_aligned_pow2(p, container_t)                           \
     ((container_t *) _align_down_pow2(p, sizeof(container_t)))
 
-/* TODO */
+/* Record update. The fields of ret and orig will be equal, except that
+   ret == val for each arg of the form ".field = val" in changes.
+
+   orig will be unmodified, except as a side effect of expanding
+   changes. */
 #define RUP_PFX(fld,_, __) __rup_copy fld
 #define rup(orig, changes...)({                 \
             __auto_type __rup_copy = orig;     \
@@ -47,6 +52,7 @@ static inline void *subtract_if_not_null(uptr p, cnt s){
             void (*__at_exit)(void)                                     \
             = (at_enter(), NULL);                                       \
         !seq_first(__at_exit, __at_exit = at_exit);)
+
 static inline void call_nullary(void (**f)(void)){
     (*f)();
 }
@@ -56,7 +62,7 @@ static inline void call_nullary(void (**f)(void)){
 /*         CASSERT(sizeof(s) == sizeof(t));                            \ */
 /*         ((union {__typeof__(s) str; t i;}) (s)).i;                  \ */
 /*         }) */
-#define PUN(t, s) (*(t *)(typeof(s) []){s})
+#define PUN(t, s) ({CASSERT(sizeof(s) == sizeof(t)); (*(t *)(typeof(s) []){s});})
 
 
 /* Execute (first, as) with comma operator sequencing, except evaluate to
@@ -90,24 +96,6 @@ static inline uptr _umin(uptr a, uptr b){
 static inline uptr _umax(uptr a, uptr b){
     return a < b ? b : a;
 }
-
-#define must(i)({                               \
-            int _i = i;                         \
-            assert(_i);                         \
-            _i;                                 \
-        })
-
-#define muste(e)({                              \
-            err _e = e;                         \
-            assert(_e >= 0);                    \
-            _e;                                 \
-        })                             
-
-#define mustp(p)({                              \
-            __auto_type _p = p;                 \
-            assert(_p);                         \
-            _p;                                 \
-        })
             
 #define in_struct(p, s)                                         \
     ((uptr) (p) >= (uptr) (s) && (uptr) (p) < (uptr)((s) + 1))  \
@@ -190,7 +178,7 @@ static inline uptr ualign_up(uptr addr, size size){
 /*     })                                                                  \ */
 
 static inline void no_op(){}
-static inline err zero(){return 0;}
+static inline err zero(){return (err) 0;}
 static inline bool return_false(){return false;}
 
 /* TODO: more thought here. */

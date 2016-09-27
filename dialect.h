@@ -2,6 +2,22 @@
 
 #ifndef __ASSEMBLER__
 
+#ifdef __cplusplus
+
+#include <atomic>
+#include <type_traits>
+#include <pustr.hpp>
+
+extern "C"{
+#define typeof decltype
+#define _Static_assert static_assert
+#define __auto_type auto
+    
+#else
+#include <pustr.h>    
+#endif
+
+
 #define ainline __attribute__((always_inline))
 #define returns_twice __attribute__((returns_twice))
 #define noinline __attribute__((noinline))
@@ -17,7 +33,7 @@
 #define used __attribute__((used))
 #define transparent __attribute__((transparent_union))
 #define visible_fun __attribute__((visibility("default")))
-#define atomic _Atomic
+#define artificial __attribute__((artificial))
 
 #define likely(e) __builtin_expect(!!(e), 1)
 #define unlikely(e) __builtin_expect(!!(e), 0)
@@ -32,7 +48,6 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <pustr.h>
 
 #include <assert.h>
 #include <config.h>
@@ -48,4 +63,8 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+#undef alignof    
+}
+#endif
 #endif

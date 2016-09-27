@@ -1,49 +1,74 @@
 #pragma once
 #include <errors.h>
 
-#define assert(e...) assertl(1, e)
+/* NB: takes a str param rather than just stringifying e because otherwise
+   callers would be forced to macro-expand e when passing it. Among other
+   reasons. */
+#define assertlstr(req_dbg_lvl, str, e...)                              \
+    ass_cond(req_dbg_lvl, E_DBG_LVL,                                    \
+             (e) ?(void) 0: (TODO("Failed assertion: %.", str), (void) 0), \
+             (void) 0)
 
-#define assertl(req_dbg_lvl, e...)                                  \
-    ass_cond(req_dbg_lvl, E_DBG_LVL,                                \
-             (!(e) ? TODO("Failed assertion: %.", #e), 1 : 1),      \
-             0 ? e : 0)
+#define assert(e...) assertlstr(1, #e, e)
 
-#define ass_cond(req, verb, e, or...)               \
-    CONCAT(ass_cond, CONCAT2(verb, req)) (e, or)
+#define assertl(req_dbg_lvl, e...) assertlstr(req_dbg_lvl, #e, e)
 
-#define ass_cond00(e, or...) e
-#define ass_cond01(e, or...) or
-#define ass_cond02(e, or...) or
-#define ass_cond03(e, or...) or
-#define ass_cond04(e, or...) or
-#define ass_cond05(e, or...) or
-#define ass_cond10(e, or...) e
-#define ass_cond11(e, or...) e
-#define ass_cond12(e, or...) or
-#define ass_cond13(e, or...) or
-#define ass_cond14(e, or...) or
-#define ass_cond15(e, or...) or
-#define ass_cond20(e, or...) e
-#define ass_cond21(e, or...) e
-#define ass_cond22(e, or...) e
-#define ass_cond23(e, or...) or
-#define ass_cond24(e, or...) or
-#define ass_cond25(e, or...) or
-#define ass_cond30(e, or...) e
-#define ass_cond31(e, or...) e
-#define ass_cond32(e, or...) e
-#define ass_cond33(e, or...) e
-#define ass_cond34(e, or...) or
-#define ass_cond35(e, or...) or
-#define ass_cond40(e, or...) e
-#define ass_cond41(e, or...) e
-#define ass_cond42(e, or...) e
-#define ass_cond43(e, or...) e
-#define ass_cond44(e, or...) e
-#define ass_cond45(e, or...) or
-#define ass_cond50(e, or...) e
-#define ass_cond51(e, or...) e
-#define ass_cond52(e, or...) e
-#define ass_cond53(e, or...) e
-#define ass_cond54(e, or...) e
-#define ass_cond55(e, or...) e
+/* Checks e when debugging, but doesn't omit it in "release
+   mode". __builtin_unreachable() should inform compiler dataflow
+   analysis, but it's probably futile. */
+#define mustlstr(req_dbg_lvl, str, e...)                            \
+    ({                                                              \
+        __auto_type _e = e;                                         \
+        assertlstr(req_dbg_lvl, str, _e);                           \
+        if(!_e)                                                     \
+            __builtin_unreachable();                                \
+        _e;                                                         \
+    })
+
+        
+#define must(i...) mustlstr(1, #i, i)
+
+#define muste(e...) !mustlstr(1, "!"#e, !(e))
+
+#define mustp(p...) mustlstr(1, #p, p)
+
+
+#define ass_cond(req, verb, e, o...)               \
+    CONCAT(ass_cond, CONCAT2(verb, req)) (e, o)
+
+#define ass_cond00(e, o...) e
+#define ass_cond01(e, o...) o
+#define ass_cond02(e, o...) o
+#define ass_cond03(e, o...) o
+#define ass_cond04(e, o...) o
+#define ass_cond05(e, o...) o
+#define ass_cond10(e, o...) e
+#define ass_cond11(e, o...) e
+#define ass_cond12(e, o...) o
+#define ass_cond13(e, o...) o
+#define ass_cond14(e, o...) o
+#define ass_cond15(e, o...) o
+#define ass_cond20(e, o...) e
+#define ass_cond21(e, o...) e
+#define ass_cond22(e, o...) e
+#define ass_cond23(e, o...) o
+#define ass_cond24(e, o...) o
+#define ass_cond25(e, o...) o
+#define ass_cond30(e, o...) e
+#define ass_cond31(e, o...) e
+#define ass_cond32(e, o...) e
+#define ass_cond33(e, o...) e
+#define ass_cond34(e, o...) o
+#define ass_cond35(e, o...) o
+#define ass_cond40(e, o...) e
+#define ass_cond41(e, o...) e
+#define ass_cond42(e, o...) e
+#define ass_cond43(e, o...) e
+#define ass_cond44(e, o...) e
+#define ass_cond45(e, o...) o
+#define ass_cond50(e, o...) e
+#define ass_cond51(e, o...) e
+#define ass_cond52(e, o...) e
+#define ass_cond53(e, o...) e
+#define ass_cond54(e, o...) e
+#define ass_cond55(e, o...) e

@@ -1,3 +1,6 @@
 [submodule "pustr"]
 	path = pustr
 	url = https://github.com/apodolsk/pustr.git
+[submodule "pustr_cpp"]
+	path = pustr_cpp
+	url = https://github.com/apodolsk/pustr_cpp.git

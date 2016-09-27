@@ -43,11 +43,14 @@
         panic("WTF!");                              \
     })
 
+/* elog(0, "My creator has abandoned me. %:%:%. " fmt      \ */
+/*      , __FILE__ , __func__ , __LINE__, ##as);           \ */
+
 #define TODO(fmt, as...)                                        \
     ({                                                          \
+        elog(0, "My creator has abandoned me. %:%:%. " fmt "\n" \
+             ,  __FILE__ , __func__ , __LINE__, ##as);          \
                                                                 \
-        elog(0, "My creator has abandoned me. %:%:%. " fmt      \
-             , __FILE__ , __func__ , __LINE__, ##as);           \
         ebreakpoint(0);                                         \
         panic("TODO!");                                         \
     })
@@ -57,7 +60,7 @@
 /* Sequel to EARG on the NES. */
 #define SUPER_EARG(fmt, as...)                                      \
     ({                                                              \
-        elog(1, "Super bad input error. %:%:%. "fmt,                \
+        elog(1, "Super bad input error. %:%:%. " fmt,               \
              __FILE__, __func__, __LINE__, ##as);                   \
         ebreakpoint(1);                                             \
         (dptr) -1;                                                  \
@@ -125,43 +128,43 @@
 #define BADMEM_MSG(addr)                                                \
                 /* "Unreadable or unwriteable memory: %.", (void *) addr    */
 
-#define err_cond(req, verb, e, or...)                           \
-    CONCAT(err_cond, CONCAT2(verb, req)) (e, or)
+#define err_cond(req, verb, e, o...)                           \
+    CONCAT(err_cond, CONCAT2(verb, req)) (e, o)
 
-#define err_cond00(e, or...) e
-#define err_cond01(e, or...) or
-#define err_cond02(e, or...) or
-#define err_cond03(e, or...) or
-#define err_cond04(e, or...) or
-#define err_cond05(e, or...) or
-#define err_cond10(e, or...) e
-#define err_cond11(e, or...) e
-#define err_cond12(e, or...) or
-#define err_cond13(e, or...) or
-#define err_cond14(e, or...) or
-#define err_cond15(e, or...) or
-#define err_cond20(e, or...) e
-#define err_cond21(e, or...) e
-#define err_cond22(e, or...) e
-#define err_cond23(e, or...) or
-#define err_cond24(e, or...) or
-#define err_cond25(e, or...) or
-#define err_cond30(e, or...) e
-#define err_cond31(e, or...) e
-#define err_cond32(e, or...) e
-#define err_cond33(e, or...) e
-#define err_cond34(e, or...) or
-#define err_cond35(e, or...) or
-#define err_cond40(e, or...) e
-#define err_cond41(e, or...) e
-#define err_cond42(e, or...) e
-#define err_cond43(e, or...) e
-#define err_cond44(e, or...) e
-#define err_cond45(e, or...) or
-#define err_cond50(e, or...) e
-#define err_cond51(e, or...) e
-#define err_cond52(e, or...) e
-#define err_cond53(e, or...) e
-#define err_cond54(e, or...) e
-#define err_cond55(e, or...) e
+#define err_cond00(e, o...) e
+#define err_cond01(e, o...) o
+#define err_cond02(e, o...) o
+#define err_cond03(e, o...) o
+#define err_cond04(e, o...) o
+#define err_cond05(e, o...) o
+#define err_cond10(e, o...) e
+#define err_cond11(e, o...) e
+#define err_cond12(e, o...) o
+#define err_cond13(e, o...) o
+#define err_cond14(e, o...) o
+#define err_cond15(e, o...) o
+#define err_cond20(e, o...) e
+#define err_cond21(e, o...) e
+#define err_cond22(e, o...) e
+#define err_cond23(e, o...) o
+#define err_cond24(e, o...) o
+#define err_cond25(e, o...) o
+#define err_cond30(e, o...) e
+#define err_cond31(e, o...) e
+#define err_cond32(e, o...) e
+#define err_cond33(e, o...) e
+#define err_cond34(e, o...) o
+#define err_cond35(e, o...) o
+#define err_cond40(e, o...) e
+#define err_cond41(e, o...) e
+#define err_cond42(e, o...) e
+#define err_cond43(e, o...) e
+#define err_cond44(e, o...) e
+#define err_cond45(e, o...) o
+#define err_cond50(e, o...) e
+#define err_cond51(e, o...) e
+#define err_cond52(e, o...) e
+#define err_cond53(e, o...) e
+#define err_cond54(e, o...) e
+#define err_cond55(e, o...) e
 
