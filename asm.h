@@ -41,8 +41,12 @@ void hlt(void){
 
 bool interrupts_enabled(void);
 
-/** Read from the TSC */
-uint64_t rdtsc();
+static inline
+u64 rdtsc(){
+    u32 l, h;
+    __asm__ __volatile__("rdtsc":"=a"(l),"=d"(h));
+    return ((u64) h << 32) | l;
+}
 
 /** Reads 1 byte from given port */
 uint8_t inb(uint16_t port);

@@ -1,5 +1,5 @@
 #pragma once
-#include <dial_macros.h>
+#include <wkmacros.h>
 #include <stdlib.h>
 
 #define alignof(e) _Alignof(e)

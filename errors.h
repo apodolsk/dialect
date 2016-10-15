@@ -1,6 +1,6 @@
 #pragma once
-#include <dial_macros.h>
-#include <config.h>
+#include <wkmacros.h>
+#include <runtime.h>
 #include <errverbs.h>
 
 /* Default break, print, and dbg levels. */

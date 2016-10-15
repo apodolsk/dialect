@@ -8,6 +8,7 @@
 #include <type_traits>
 #include <pustr.hpp>
 
+/* Not proud of this. */
 extern "C"{
 #define typeof decltype
 #define _Static_assert static_assert
@@ -42,20 +43,21 @@ extern "C"{
 
 #define prefetch(p, as...) __builtin_prefetch((void *)(p), ##as)
 
-#include <whtypes.h>
-#include <runtime_config.h>    
-#include <limits.h>
+#include <wktypes.h>
+#include <runtime_spec.h>
+#include <runtime.h>    
 
 #include <string.h>
 #include <stdio.h>
 
+#include <limits.h>
+
 #include <assert.h>
-#include <config.h>
 #include <log.h>
 
 #include <errors.h>
-#include <dial_util.h>
-#include <wrand.h>
+#include <wkutil.h>
+#include <wkrand.h>
 
 #include <syscall.h>
 

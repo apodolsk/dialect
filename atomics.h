@@ -3,9 +3,11 @@
 CASSERT(sizeof(cnt) <= sizeof(uptr));
 CASSERT(sizeof(int) <= sizeof(uptr));
 
+/* TODO: unfortunately, _Atomic is too strict but the __atomic builtins
+   are quite buggy. */
 /* TODO: pointer casts here still run afoul of alias analysis. Switch to
    builtins or mess with aliasing attrib. */
-/* TODO: can't remember when I chose this arg order. Seems bad now. */
+/* TODO: awful arg order. */
 
 uptr _xadd(iptr s, volatile uptr *p);
 uptr _xchg(uptr s, volatile uptr *p);
