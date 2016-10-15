@@ -57,7 +57,7 @@ static inline void call_nullary(void (**f)(void)){
     (*f)();
 }
 
-/* NB: Clang had a buggy statement-expression implementation. */
+/* NB: unfortunately, clang can't seem to handle union puns. */
 /* #define PUN(t, s) ({                                                \ */
 /*         CASSERT(sizeof(s) == sizeof(t));                            \ */
 /*         ((union {__typeof__(s) str; t i;}) (s)).i;                  \ */

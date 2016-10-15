@@ -135,7 +135,7 @@ void _atomic_write2(dptr n, volatile dptr *p){
             return;
 }
 
-uptr _xadd_iff(uptr a, volatile uptr *p, uptr lim){
+uptr _xadd_iff_less(uptr a, volatile uptr *p, uptr lim){
     for(uptr r = *p;;){
         if(r + a > lim)
             return r;

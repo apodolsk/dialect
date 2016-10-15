@@ -18,6 +18,6 @@ void rand_update_local_seed(void){
 }
 
 bool randpcnt(uint pcnt){
-    return pcnt && ((uint) rand() % 100 < pcnt);
+    return pcnt == 100 || (pcnt && ((uint) rand() % 100 < pcnt));
 }
 

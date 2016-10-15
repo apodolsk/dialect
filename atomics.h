@@ -14,7 +14,7 @@ uptr _atomic_read(volatile uptr *p);
 dptr _atomic_read2(volatile dptr *p);
 void _atomic_write2(dptr n, volatile dptr *p);
 
-uptr _xadd_iff(uptr a, volatile uptr *p, uptr lim);
+uptr _xadd_iff_less(uptr a, volatile uptr *p, uptr lim);
 uptr _xsub_iff(uptr s, volatile uptr *p);
 void fuzz_atomics();
 
@@ -44,8 +44,8 @@ bool _upd2_won(dptr n, volatile dptr *p, dptr *old);
                        trace(ATOMICS, 2, _xadd, s, (volatile uptr *) d))
 #define xchg(s, d) PUN(typeof(*d), _xchg(PUN(uptr, s), (volatile uptr *) (d)))
 #define xchg2(s, d) PUN(typeof(*d), _xchg2(PUN(dptr, s), (volatile dptr *) (d)))
-#define xadd_iff(s, d, lim)                                         \
-    ((typeof(*d)) _xadd_iff(s, (volatile uptr *) d, (uptr) lim))
+#define xadd_iff_less(s, d, lim)                                         \
+    ((typeof(*d)) _xadd_iff_less(s, (volatile uptr *) d, (uptr) lim))
 #define xsub_iff(s, p)                                  \
     ((typeof(*p)) _xsub_iff(s, (volatile uptr *) p))    \
 
