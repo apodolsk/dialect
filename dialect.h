@@ -15,7 +15,8 @@ extern "C"{
 #define __auto_type auto
     
 #else
-#include <pustr.h>    
+#include <pustr.h>
+#include <putrace.h>
 #endif
 
 
